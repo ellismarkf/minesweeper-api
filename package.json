@@ -1,0 +1,9 @@
+{
+  "name": "minesweeper-api",
+  "version": "1.0.0",
+  "description": "backend API for minesweeper",
+  "main": "index.js",
+  "repository": "git@github.com:ellismarkf/minesweeper-api.git",
+  "author": "Mark Ellis <ellismarkf@gmail.com>",
+  "license": "MIT"
+}
