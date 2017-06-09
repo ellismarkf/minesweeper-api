@@ -30,7 +30,11 @@ app.get('/minefields', async (req, res) => {
 app.get('/minefields/:minefieldId', async (req, res) => {
   try {
     const { rows } = await db.query('SELECT * FROM minefields WHERE id = $1', [parseInt(req.params.minefieldId)]);
-    console.log(rows);
+    if (rows.length === 0) {
+      res.status(404).json({
+        error: `No minefields with ID ${req.params.minefieldId}.`
+      });
+    }
     res.send(rows[0]);
   }
   catch(err) {
