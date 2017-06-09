@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const parser = require('body-parser');
 const db = require('./lib/db');
 const app = express();
 
@@ -12,6 +13,7 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet());
+app.use(parser.json());
 
 app.get('/', (req, res) => {
   res.send(' 💣 ');
@@ -45,8 +47,16 @@ app.get('/minefields/:minefieldId', async (req, res) => {
   }
 });
 
-app.post('/minefields', (req, res) => {
-  res.send('POST NEW MINEFIELD');
+app.post('/minefields', async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      'INSERT INTO minefields (rows, cols, mines, name, tiles) VALUES($1, $2, $3, $4, $5)',
+      [req.body.rows, req.body.cols, req.body.mines, req.body.name, `ARRAY${req.body.tiles}`]
+    )
+    res.status(200).json({ message: 'POST NEW MINEFIELD' });
+  } catch(err) {
+    res.status(500).json({ error: err });
+  }
 });
 
 app.listen(PORT, () => {
