@@ -55,6 +55,7 @@ app.post('/minefields', async (req, res) => {
     )
     res.status(200).json({ message: 'POST NEW MINEFIELD' });
   } catch(err) {
+    console.error(err);
     res.status(500).json({ error: err });
   }
 });
