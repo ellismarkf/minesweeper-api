@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/minefields', async (req, res) => {
-  const { rows } = db.query('SELECT * FROM minefields');
+  const { rows } = await db.query('SELECT * FROM minefields', null);
   res.send(rows);
 });
 
