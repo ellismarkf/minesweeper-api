@@ -19,12 +19,12 @@ app.get('/', (req, res) => {
 
 app.get('/minefields', async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM minefields');
+    const { rows } = await db.query('SELECT * FROM minefields', null);
+    res.send(rows);
   }
   catch(err) {
     console.error(err);
   }
-  res.send(rows);
 });
 
 app.get('/minefields/:minefieldId', (req, res) => {
