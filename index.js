@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const db = require('./lib/db');
 const app = express();
 
 const PORT = process.env.PORT || 5000;
@@ -16,8 +17,9 @@ app.get('/', (req, res) => {
   res.send(' 💣 ');
 });
 
-app.get('/minefields', (req, res) => {
-  res.send('GET ALL MINEFIELDS');
+app.get('/minefields', async (req, res) => {
+  const { rows } = db.query('SELECT * FROM minefields');
+  res.send(rows);
 });
 
 app.get('/minefields/:minefieldId', (req, res) => {
