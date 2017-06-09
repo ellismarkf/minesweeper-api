@@ -51,7 +51,7 @@ app.post('/minefields', async (req, res) => {
   try {
     const { rows } = await db.query(
       'INSERT INTO minefields (rows, cols, mines, name, tiles) VALUES($1, $2, $3, $4, $5)',
-      [req.body.rows, req.body.cols, req.body.mines, req.body.name, `ARRAY[${req.body.tiles}]`]
+      [req.body.rows, req.body.cols, req.body.mines, req.body.name, `{${req.body.tiles}}`]
     )
     res.status(200).json({ message: 'POST NEW MINEFIELD' });
   } catch(err) {
