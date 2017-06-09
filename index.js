@@ -30,6 +30,7 @@ app.get('/minefields', async (req, res) => {
 app.get('/minefields/:minefieldId', async (req, res) => {
   try {
     const { rows } = await db.query('SELECT * FROM minefields WHERE id = $1', [parseInt(req.params.minefieldId)]);
+    console.log(rows);
     res.send(rows[0]);
   }
   catch(err) {
