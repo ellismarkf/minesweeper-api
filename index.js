@@ -27,8 +27,14 @@ app.get('/minefields', async (req, res) => {
   }
 });
 
-app.get('/minefields/:minefieldId', (req, res) => {
-  res.send(req.params);
+app.get('/minefields/:minefieldId', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM minefields WHERE id = $1', [parseInt(req.param.gameId)]);
+    res.send(rows[0]);
+  }
+  catch(err) {
+    console.error(err);
+  }
 });
 
 app.post('/minefields', (req, res) => {
