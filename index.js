@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 5000;
 const corsOpts = {
   origin: [
     'http://localhost:3000',
-    'https://mineswept.com'
+    'https://mineswept.com',
+    'https://mineswept.now.sh'
   ],
   optionsSuccessStatus: 200,
 }
