@@ -14,13 +14,11 @@ const corsOpts = {
     'https://mineswept.now.sh',
     'https://minesweeper-ellismarkf.vercel.app'
   ],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 200,
 }
 
-app.use(cors({
-  origin: (origin, next) => corsOpts.origin.includes(origin) ? next(null, true) : next(new Error('Not allowed by CORS')),
-  optionsSuccessStatus: 200
-}));
+app.use(cors(corsOpts));
 app.use(helmet());
 app.use(parser.json());
 
