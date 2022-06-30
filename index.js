@@ -27,43 +27,53 @@ app.get('/', (req, res) => {
 });
 
 app.get('/minefields', async (req, res) => {
+  console.log(req)
   try {
-    const { rows } = await db.query('SELECT * FROM minefields', null);
+    const client = await db.connect();
+    const { rows } = await client.query('SELECT * FROM minefields', null);
     res.send(rows);
+    client.release()
   }
-  catch(err) {
-    console.error(err);
+  catch(error) {
+    console.error(error);
+    res.status(500).json({
+      error
+    });
   }
 });
 
 app.get('/minefields/:minefieldId', async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM minefields WHERE id = $1', [parseInt(req.params.minefieldId)]);
+    const client = await db.connect()
+    const { rows } = await client.query('SELECT * FROM minefields WHERE id = $1', [parseInt(req.params.minefieldId)]);
     if (rows.length === 0) {
       res.status(404).json({
         error: `No minefields with ID ${req.params.minefieldId}.`
       });
     }
     res.send(rows[0]);
+    client.release()
   }
-  catch(err) {
-    console.error(err);
+  catch(error) {
+    console.error(error);
     res.status(500).json({
-      error: err
+      error
     });
   }
 });
 
 app.post('/minefields', async (req, res) => {
   try {
+    const client = await db.connect()
     const { rows } = await db.query(
       'INSERT INTO minefields (rows, cols, mines, name, tiles) VALUES($1, $2, $3, $4, $5)',
       [req.body.rows, req.body.cols, req.body.mines, req.body.name, `{${req.body.tiles}}`]
     )
     res.status(200).json({ message: 'POST NEW MINEFIELD' });
-  } catch(err) {
-    console.error(err);
-    res.status(500).json({ error: err });
+    client.release()
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({ error });
   }
 });
 
