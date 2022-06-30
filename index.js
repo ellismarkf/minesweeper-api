@@ -17,7 +17,10 @@ const corsOpts = {
   optionsSuccessStatus: 200,
 }
 
-app.use(cors(corsOpts));
+app.use(cors({
+  origin: (origin, next) => corsOpts.origin.includes(origin) ? next(null, true) : next(new Error('Not allowed by CORS')),
+  optionsSuccessStatus: 200
+}));
 app.use(helmet());
 app.use(parser.json());
 
