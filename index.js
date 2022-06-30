@@ -10,6 +10,7 @@ const corsOpts = {
   origin: [
     'http://localhost:3000',
     'https://mineswept.com',
+    'https://www.mineswept.com',
     'https://mineswept.now.sh',
     'https://minesweeper-ellismarkf.vercel.app'
   ],
