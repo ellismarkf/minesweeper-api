@@ -27,7 +27,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/minefields', async (req, res) => {
-  console.log(req)
   try {
     const client = await db.connect();
     const { rows } = await client.query('SELECT * FROM minefields', null);
